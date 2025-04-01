@@ -5,6 +5,7 @@ import javax.crypto.SecretKey;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 
@@ -14,10 +15,11 @@ public class decryptor {
 	Scanner read = new Scanner(System.in);
 	public void DeCryptorTxt() {
 		try {
-			String path = "F:\\encryptor\\txt\\";
-			System.out.println("diretorio do arquivo .encrypted");
+			String correntDir = System.getProperty("user.dir");
+			Path path = Paths.get(correntDir, "..", "txt").normalize();
+			System.out.println("diretorio do arquivo .encrypted>>");
 			String encryptedFile = read.nextLine();
-			String decryptedFile = path + "arquivo_descriptografado.txt";
+			String decryptedFile = path.toString() + "\\" +"arquivo_descriptografado.txt";
 			
 			String keyTxt;
 			

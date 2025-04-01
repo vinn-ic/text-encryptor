@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 
 import java.nio.file.Files;// escluir o arquivo .TXT criado e mander só o .encryptrf
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -17,10 +18,11 @@ public class creatTxt {
 	public String creattxt() {
 		Scanner read = new Scanner(System.in);
 		
-		String nameTxt = "textNoEncryptedSys.Txt";
-		String diretorioS = "F:\\encryptor\\txt\\";
-		String path = diretorioS + nameTxt;
-		
+		String nameTxt = "\\textNoEncryptedSys.Txt";
+		String currentDir = System.getProperty("user.dir");
+		Path diretorioS = Paths.get(currentDir, "..","txt").normalize();
+		String path = diretorioS.toString() + nameTxt;
+		System.out.println(path);
 		String text;
 		
 		try (FileWriter writer = new FileWriter(path)){
@@ -48,12 +50,13 @@ public class creatTxt {
 	public void encryptorTxt() {
 		Scanner read = new Scanner(System.in);
 		try {
-			String path = "F:\\encryptor\\txt\\";
-			String pathTxt = "F:\\encryptor\\txt\\textNoEncryptedSys.Txt";
+			String currentDir = System.getProperty("user.dir"); //ver como pegar o diretorio do Main e voltar para a parta txt, usando o System.getPropert("user.dir")
+			Path path = Paths.get(currentDir, "..", "txt").normalize();//path = F:\\encryptor\\txt\\
+			String pathTxt = path.toString() + "\\textNoEncryptedSys.Txt";
 			System.out.print("nome do arquivo .encrypted>>");
 			String nameTxtCry = read.nextLine();
-			String inputFile = path + "textNoEncryptedSys.txt";
-			String outputFile = path + nameTxtCry + ".encrypted";
+			String inputFile = path.toString() + "\\textNoEncryptedSys.txt";
+			String outputFile = path.toString() + "\\" + nameTxtCry + ".encrypted";
 			
 			SecretKey secretKey = generateKey();
 			System.out.printf("key gerada>> %s%n", Base64.getEncoder().encodeToString(secretKey.getEncoded()));			 
